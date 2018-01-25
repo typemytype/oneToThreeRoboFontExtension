@@ -31,13 +31,13 @@ warnings.simplefilter("once")
 
 # a simple wrapper around a func/class thingy
 # just to post a deprecated warning
-def warnWrapper(func, rootModule, oldModule, newModule):    
+def warnWrapper(func, rootModule, oldModule, newModule):
     def wrapper(*args, **kwargs):
-        message = "%s is deprecated use '%s' instead of '%s'" % (rootModule, newModule, oldModule) 
+        message = "%s is deprecated use '%s' instead of '%s'" % (rootModule, newModule, oldModule)
         warnings.warn(message, DeprecationWarning)
         return func(*args, **kwargs)
     return wrapper
-    
+
 # a map of already mocked modules
 mockedModules = {}
 # a dict of callback to mock
@@ -48,34 +48,35 @@ toMock = {
         "pens.adapterPens.SegmentToPointPen": pointPen.SegmentToPointPen,
         "pens.adapterPens.TransformPointPen": transformPointPen.TransformPointPen,
         "pens.adapterPens.GuessSmoothPointPen":  guessSmoothPointPen.GuessSmoothPointPen,
-        
+
         "pens.angledMarginPen.AngledMarginPen": angledMarginPen.AngledMarginPen,
-        "pens.angledMarginPen.getAngledMargins": angledMarginPen.getAngledMargins, 
-        "pens.angledMarginPen.setAngledLeftMargin": angledMarginPen.setAngledLeftMargin, 
-        "pens.angledMarginPen.setAngledRightMargin": angledMarginPen.setAngledRightMargin, 
-        "pens.angledMarginPen.centerAngledMargins": angledMarginPen.centerAngledMargins, 
-        "pens.angledMarginPen.guessItalicOffset": angledMarginPen.guessItalicOffset,         
-        
+        "pens.angledMarginPen.getAngledMargins": angledMarginPen.getAngledMargins,
+        "pens.angledMarginPen.setAngledLeftMargin": angledMarginPen.setAngledLeftMargin,
+        "pens.angledMarginPen.setAngledRightMargin": angledMarginPen.setAngledRightMargin,
+        "pens.angledMarginPen.centerAngledMargins": angledMarginPen.centerAngledMargins,
+        "pens.angledMarginPen.guessItalicOffset": angledMarginPen.guessItalicOffset,
+
         "pens.boundsPen.ControlBoundsPen" : boundsPen.ControlBoundsPen,
         "pens.boundsPen.BoundsPen": boundsPen.BoundsPen,
-        
+
         "pens.digestPen.DigestPointPen": digestPointPen.DigestPointPen,
         "pens.digestPen.DigestPointStructurePen": digestPointPen.DigestPointStructurePen,
-        
+
         "pens.marginPen.MarginPen": marginPen.MarginPen,
-        
+
+        "pens.pointPen.AbstractPointPen": pointPen.AbstractPointPen,
         "pens.pointPen.BasePointToSegmentPen": pointPen.BasePointToSegmentPen,
         "pens.pointPen.PrintingPointPen": printPointPen.PrintPointPen,
         "pens.pointPen.SegmentPrintingPointPen": printPointPen.PrintPointPen,
         "pens.pointPen.PrintingSegmentPen": printPen.PrintPen,
         "pens.pointPen.SegmentPrintingPointPen": printPen.PrintPen,
-        
+
         "pens.printingPens.PrintingPointPen":  printPointPen.PrintPointPen,
         "pens.printingPens.PrintingSegmentPen": printPen.PrintPen,
         "pens.printingPens.SegmentPrintingPointPen": printPointPen.PrintPointPen,
-        
+
         "pens.reverseContourPointPen.ReverseContourPointPen": reverseContourPen.ReverseContourPen,
-        
+
         "pens.filterPen.distance": penTools.distance,
         "pens.filterPen.ThresholdPen": thresholdPen.ThresholdPen,
         "pens.filterPen.thresholdGlyph": thresholdPen.thresholdGlyph,
@@ -83,8 +84,8 @@ toMock = {
         "pens.filterPen._mid": penTools.middlePoint,
         "pens.filterPen._getCubicPoint": penTools.getCubicPoint,
         "pens.filterPen.FlattenPen": flattenPen.FlattenPen,
-        "pens.filterPen.flattenGlyph": flattenPen.flattenGlyph,    
-        
+        "pens.filterPen.flattenGlyph": flattenPen.flattenGlyph,
+
         "interface.all.dialogs.Message": mojo.UI.Message,
         "interface.all.dialogs.AskString": mojo.UI.AskString,
         "interface.all.dialogs.AskYesNoCancel": mojo.UI.AskYesNoCancel,
@@ -92,9 +93,9 @@ toMock = {
         "interface.all.dialogs.GetFolder": mojo.UI.GetFolder,
         "interface.all.dialogs.PutFile": mojo.UI.PutFile,
         "interface.all.dialogs.SelectFont": mojo.UI.SelectFont,
-        "interface.all.dialogs.SelectGlyph": mojo.UI.SelectGlyph,   
-        "interface.all.dialogs.FindGlyph": mojo.UI.FindGlyph,   
-    }  
+        "interface.all.dialogs.SelectGlyph": mojo.UI.SelectGlyph,
+        "interface.all.dialogs.FindGlyph": mojo.UI.FindGlyph,
+    }
 }
 
 # start looping over all mocked root modules
@@ -104,7 +105,7 @@ for item, mocks in toMock.items():
     for mock, callback in mocks.items():
         moduleName = item
         # split on . to get sub modules
-        parts = mock.split(".")        
+        parts = mock.split(".")
         for part in parts[:-1]:
             # get the sub module name
             moduleName += ".%s" % part
@@ -118,7 +119,7 @@ for item, mocks in toMock.items():
                 # or get the mocked module
                 subModule = mockedModules[part]
             # set the new mocked module as attr to the previous mocked part
-            setattr(module, part, subModule)            
+            setattr(module, part, subModule)
             module = subModule
         # add the callback to the last mocked module
         setattr(module, parts[-1], warnWrapper(callback, item, "%s.%s" % (item, mock), callback.__module__))
