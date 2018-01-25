@@ -13,6 +13,8 @@ from ufoLib import pointPen
 
 from fontTools.pens import boundsPen
 from fontTools.pens import reverseContourPen
+from fontTools.misc import arrayTools
+from fontTools.misc import bezierTools
 
 # lets start
 import warnings
@@ -43,7 +45,21 @@ mockedModules = {}
 # a dict of callback to mock
 # not all callbacs in each module needed to be mocked
 toMock = {
-    "robofab" : {
+    "robofab": {
+        "world.CurrentFont": mojo.roboFont.CurrentFont,
+        "world.CurrentGlyph": mojo.roboFont.CurrentGlyph,
+        "world.RFont": mojo.roboFont.RFont,
+        "world.RGlyph": mojo.roboFont.RGlyph,
+        "world.OpenFont": mojo.roboFont.OpenFont,
+        "world.NewFont": mojo.roboFont.NewFont,
+        "world.AllFonts": mojo.roboFont.AllFonts,
+
+        "objects.objects.objectsRF.RFont": mojo.roboFont.RFont,
+        "objects.objects.objectsRF.RGlyph": mojo.roboFont.RGlyph,
+        "objects.objects.objectsRF.OpenFont": mojo.roboFont.OpenFont,
+        "objects.objects.objectsRF.NewFont": mojo.roboFont.NewFont,
+        "objects.objects.objectsRF.AllFonts": mojo.roboFont.AllFonts,
+
         "pens.adapterPens.PointToSegmentPen": pointPen.PointToSegmentPen,
         "pens.adapterPens.SegmentToPointPen": pointPen.SegmentToPointPen,
         "pens.adapterPens.TransformPointPen": transformPointPen.TransformPointPen,
@@ -95,6 +111,31 @@ toMock = {
         "interface.all.dialogs.SelectFont": mojo.UI.SelectFont,
         "interface.all.dialogs.SelectGlyph": mojo.UI.SelectGlyph,
         "interface.all.dialogs.FindGlyph": mojo.UI.FindGlyph,
+
+        "misc.arrayTools.calcBounds": arrayTools.calcBounds,
+        "misc.arrayTools.updateBounds": arrayTools.updateBounds,
+        "misc.arrayTools.pointInRect": arrayTools.pointInRect,
+        "misc.arrayTools.pointsInRect": arrayTools.pointsInRect,
+        "misc.arrayTools.vectorLength": arrayTools.vectorLength,
+        "misc.arrayTools.asInt16": arrayTools.asInt16,
+        "misc.arrayTools.normRect": arrayTools.normRect,
+        "misc.arrayTools.scaleRect": arrayTools.scaleRect,
+        "misc.arrayTools.offsetRect": arrayTools.offsetRect,
+        "misc.arrayTools.insetRect": arrayTools.insetRect,
+        "misc.arrayTools.sectRect": arrayTools.sectRect,
+        "misc.arrayTools.unionRect": arrayTools.unionRect,
+        "misc.arrayTools.rectCenter": arrayTools.rectCenter,
+        "misc.arrayTools.intRect": arrayTools.intRect,
+
+        "misc.bezierTools.calcQuadraticBounds": bezierTools.calcQuadraticBounds,
+        "misc.bezierTools.calcCubicBounds": bezierTools.calcCubicBounds,
+        "misc.bezierTools.splitLine": bezierTools.splitLine,
+        "misc.bezierTools.splitQuadratic": bezierTools.splitQuadratic,
+        "misc.bezierTools.splitCubic": bezierTools.splitCubic,
+        "misc.bezierTools.splitQuadraticAtT": bezierTools.splitQuadraticAtT,
+        "misc.bezierTools.splitCubicAtT": bezierTools.splitCubicAtT,
+        "misc.bezierTools.solveQuadratic": bezierTools.solveQuadratic,
+        "misc.bezierTools.solveCubic": bezierTools.solveCubic,
     }
 }
 
