@@ -46,6 +46,54 @@ needGuidelines = [
 for obj in needGuidelines:
     obj.guidelines = obj.guides
     obj.appendGuideline = obj.addGuide
+    obj.removeGuideline = obj.removeGuide
+
+
+###################
+# transformations #
+###################
+
+needTransformations = [
+    robofabWrapper.RobofabWrapperGlyph,
+    robofabWrapper.RobofabWrapperContour,
+    robofabWrapper.RobofabWrapperComponent,
+]
+
+for obj in needTransformations:
+    obj.moveBy = obj.move
+    if obj == robofabWrapper.RobofabWrapperComponent:
+        obj.scaleBy = obj.scaleTransformation
+    else:
+        obj.scaleBy = obj.scale
+    obj.rotateBy = obj.rotate
+    obj.skewBy = obj.skew
+    obj.transformBy = obj.transform
+
+
+##########
+# glyph  #
+##########
+
+needBounds = [
+    robofabWrapper.RobofabWrapperGlyph,
+    robofabWrapper.RobofabWrapperContour,
+    robofabWrapper.RobofabWrapperComponent,
+]
+
+for obj in needBounds:
+    obj.bounds = obj.box
+
+###########
+# changed #
+###########
+
+robofabWrapper.RobofabWrapperGlyph.changed = robofabWrapper.RobofabWrapperGlyph.update
+
+#############
+# markColor #
+#############
+
+robofabWrapper.RobofabWrapperGlyph.markColor = robofabWrapper.RobofabWrapperGlyph.mark
 
 ############################
 # representation factories #
