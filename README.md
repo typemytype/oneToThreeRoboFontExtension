@@ -29,6 +29,8 @@ The extension makes API changes from RF3 available in RF1:
 - representation factories
 - new `mojo.UI` callbacks
 
+The extension will also change the application name in the main menu from *RoboFont*, to *RoboFont 1.8*, so it’s easier to differentiate between the two versions of the app.
+
 ### In RoboFont 3
 
 The extension routes deprecated RoboFab modules to their corresponding APIs in RF3:
