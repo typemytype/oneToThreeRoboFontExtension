@@ -1,3 +1,6 @@
+import AppKit
+from mojo.roboFont import version as roboFontVersion
+
 from lib.fontObjects import doodleContour, doodlePoint, doodleComponent, doodleGlyph, doodleFont, doodleAnchor, robofabWrapper
 
 ###############
@@ -31,7 +34,6 @@ for obj in needIdentifiers:
     obj.getIdentifier = _getIdentifier
     obj.generateIdentifier = _generateIdentifier
 
-
 ##############
 # guidelines #
 ##############
@@ -47,7 +49,6 @@ for obj in needGuidelines:
     obj.guidelines = obj.guides
     obj.appendGuideline = obj.addGuide
     obj.removeGuideline = obj.removeGuide
-
 
 ###################
 # transformations #
@@ -68,7 +69,6 @@ for obj in needTransformations:
     obj.rotateBy = obj.rotate
     obj.skewBy = obj.skew
     obj.transformBy = obj.transform
-
 
 ##########
 # glyph  #
@@ -108,11 +108,23 @@ def _registerRepresentationFactory(cls, name, factory, destructiveNotifications=
 
 defcon.registerRepresentationFactory = _registerRepresentationFactory
 
-# adding some new usefull mojo callbacks
+# adding some new useful mojo callbacks
 import mojo.UI
 
 from lib.scripting.codeEditor import CodeEditor
 mojo.UI.CodeEditor = CodeEditor
+
+####################
+# Change App Title #
+####################
+
+menu = AppKit.NSApp().mainMenu()
+roboFontItem = menu.itemWithTitle_("RoboFont")
+if roboFontItem:
+    txt = "RoboFont %s" % roboFontVersion
+    attrTxt = AppKit.NSAttributedString.alloc().initWithString_attributes_(txt, {AppKit.NSFontAttributeName: AppKit.NSFont.menuBarFontOfSize_(0)})
+    roboFontItem.setAttributedTitle_(attrTxt)
+    roboFontItem.submenu().setTitle_(txt)
 
 ###############
 # test in RF1 #
