@@ -178,4 +178,7 @@ if __name__ == '__main__':
     g.rotateBy(30, origin=(100, 100))
     g.changed()
     f.changed()
+    otfPath = f.path.replace('.ufo', '.otf')
+    f.generate("otfcff")
+    f.generate("otfcff", otfPath)
     print("done")

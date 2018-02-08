@@ -180,4 +180,6 @@ if __name__ == '__main__':
     g.skew(30, offset=(100, 100))
     g.scale((1.5, 2.0), center=(100, 100))
     g.rotate(30, offset=(100, 100))
+    otfPath = f.path.replace('.ufo', '.otf')
+    f.generate(otfPath, 'otf')
     print("done")
