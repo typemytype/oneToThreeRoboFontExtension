@@ -177,6 +177,7 @@ if __name__ == '__main__':
     # this must work in RF3
     f = CurrentFont()
     g = CurrentGlyph()
-    g.skewBy(30, offset=(100, 100))
-    g.scaleBy((1.5, 2.0), center=(100, 100))
-    g.rotateBy(30, offset=(100, 100))
+    g.skew(30, offset=(100, 100))
+    g.scale((1.5, 2.0), center=(100, 100))
+    g.rotate(30, offset=(100, 100))
+    print("done")

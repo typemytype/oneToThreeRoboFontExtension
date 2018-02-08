@@ -60,14 +60,38 @@ needTransformations = [
     robofabWrapper.RobofabWrapperComponent,
 ]
 
+def keyWordSwapper(func, **kwargsMap):
+    def wrapper(self, *args, **kwargs):
+        for search, replace in kwargsMap.items():
+            if search in kwargs:
+                kwargs[replace] = kwargs[search]
+                del kwargs[search]
+        func(self, *args, **kwargs)
+    return wrapper
+
+
+def skewWrapper(self, value, origin):
+    import math
+    from fontTools.misc import transform
+    x, y = value
+    x = math.radians(x)
+    y = math.radians(y)
+    if origin:
+        ox, oy = origin
+    else:
+        ox = oy = 0
+    t = transform.Identity.translate(-ox, -oy).skew(x=x, y=y).translate(ox, oy)
+    self.transform(tuple(t))
+
+
 for obj in needTransformations:
     obj.moveBy = obj.move
     if obj == robofabWrapper.RobofabWrapperComponent:
         obj.scaleBy = obj.scaleTransformation
     else:
-        obj.scaleBy = obj.scale
-    obj.rotateBy = obj.rotate
-    obj.skewBy = obj.skew
+        obj.scaleBy = keyWordSwapper(obj.scale, origin="center")
+    obj.rotateBy = keyWordSwapper(obj.rotate, origin="offset")
+    obj.skewBy = skewWrapper
     obj.transformBy = obj.transform
 
 ##########
@@ -87,7 +111,22 @@ for obj in needBounds:
 # changed #
 ###########
 
-robofabWrapper.RobofabWrapperGlyph.changed = robofabWrapper.RobofabWrapperGlyph.update
+def _set_changed(self, value):
+    self.update()
+
+def _get_changed(parent):
+    class callback(object):
+
+        def __init__(self):
+            parent.update()
+
+        def __bool__(self):
+            return parent.naked().dirty
+
+    return callback
+
+robofabWrapper.RobofabWrapperGlyph.changed = property(_get_changed, _set_changed)
+robofabWrapper.RobofabWrapperFont.changed = property(_get_changed, _set_changed)
 
 #############
 # markColor #
@@ -139,3 +178,4 @@ if __name__ == '__main__':
     g.rotateBy(30, origin=(100, 100))
     g.changed()
     f.changed()
+    print("done")
