@@ -168,3 +168,15 @@ for item, mocks in toMock.items():
         module = rootModule
     # set the root in the sys.modules
     sys.modules[rootModule.__name__] = rootModule
+
+###############
+# test in RF3 #
+###############
+
+if __name__ == '__main__':
+    # this must work in RF3
+    f = CurrentFont()
+    g = CurrentGlyph()
+    g.skewBy(30, offset=(100, 100))
+    g.scaleBy((1.5, 2.0), center=(100, 100))
+    g.rotateBy(30, offset=(100, 100))

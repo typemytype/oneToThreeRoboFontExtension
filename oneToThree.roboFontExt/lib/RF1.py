@@ -114,4 +114,16 @@ import mojo.UI
 from lib.scripting.codeEditor import CodeEditor
 mojo.UI.CodeEditor = CodeEditor
 
+###############
+# test in RF1 #
+###############
 
+if __name__ == '__main__':
+    # this must work in RF1
+    f = CurrentFont()
+    g = CurrentGlyph()
+    g.skewBy((20, 10), origin=(100, -400))
+    g.scaleBy((1.5, 2.0), origin=(100, 100))
+    g.rotateBy(30, origin=(100, 100))
+    g.changed()
+    f.changed()
