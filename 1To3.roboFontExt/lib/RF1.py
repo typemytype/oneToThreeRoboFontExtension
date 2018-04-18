@@ -112,7 +112,8 @@ for obj in needBounds:
 ###########
 
 def _set_changed(self, value):
-    self.update()
+    if value:
+        self.update()
 
 def _get_changed(parent):
     class callback(object):
@@ -127,6 +128,15 @@ def _get_changed(parent):
 
 robofabWrapper.RobofabWrapperGlyph.changed = property(_get_changed, _set_changed)
 robofabWrapper.RobofabWrapperFont.changed = property(_get_changed, _set_changed)
+
+##############
+# get parent #
+##############
+
+def _get_font(self):
+    return self.getParent()
+
+robofabWrapper.RobofabWrapperGlyph.font = property(_get_font)
 
 #############
 # markColor #
