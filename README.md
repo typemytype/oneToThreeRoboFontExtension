@@ -11,7 +11,7 @@ RoboFont 3 introduces two significant changes which affect the scripting API:
 | RoboFab API | FontParts API |
 | Python 2    | Python 3      |
 
-This extension maps ‘forward’ from RoboFab to FontParts syntax (to make RF1 code compatible with RF3), and ‘backwards’ from FontParts to RoboFab syntax (to make RF3 code compatible with RF1). See [RoboFab vs. FontParts APIs](http://typemytype.gitlab.io/robofont_com/documentation/building-tools/toolkit/robofab-fontparts/).
+This extension maps ‘forward’ from RoboFab to FontParts syntax (to make RF1 code compatible with RF3), and ‘backwards’ from FontParts to RoboFab syntax (to make RF3 code compatible with RF1). See [RoboFab vs. FontParts APIs](http://robofont.com/documentation/building-tools/toolkit/robofab-fontparts/).
 
 **This extension does not handle Python 2 to Python 3 conversion.** See [Python 2 vs. Python 3](http://python-future.org/compatible_idioms.html#essential-syntax-differences).
 
