@@ -9,7 +9,7 @@ from fontPens import digestPointPen
 from fontPens import marginPen
 from fontPens import printPointPen
 from fontPens import printPen
-from ufoLib import pointPen
+from fontTools.pens import pointPen
 
 from fontTools.pens import boundsPen
 from fontTools.pens import reverseContourPen
