@@ -26,7 +26,7 @@ import mojo
 from mojo.UI import setDefault
 
 # force warnings to be displayed
-setDefault("warningsLevel", "once")
+# setDefault("warningsLevel", "once")
 warnings.resetwarnings()
 warnings.simplefilter("once")
 
